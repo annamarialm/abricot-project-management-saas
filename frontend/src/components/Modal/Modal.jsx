@@ -5,10 +5,20 @@ export default function Modal({ isOpen, onClose, children }) {
     return null;
   }
 
+  function handleOverlayClick() {
+    onClose();
+  }
+
+  function handleModalClick(event) {
+    event.stopPropagation();
+  }
+
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <button onClick={onClose}>Fermer</button>
+    <div className="modal-overlay" onClick={handleOverlayClick}>
+      <div className="modal-content" onClick={handleModalClick}>
+        <button className="modal-close-button" onClick={onClose}>
+          Fermer
+        </button>
 
         {children}
       </div>

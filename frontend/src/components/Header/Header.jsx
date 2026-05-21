@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { useAuth } from '@/components/AuthProvider/AuthProvider';
 
+import UserAvatar from '@/components/UserAvatar/UserAvatar';
+
 import './Header.css';
 
 export default function Header() {
@@ -12,12 +14,6 @@ export default function Header() {
   if (!user) {
     return null;
   }
-
-  const initials = user.name
-    ?.split(' ')
-    .map((name) => name[0])
-    .join('')
-    .toUpperCase();
 
   return (
     <header>
@@ -34,7 +30,7 @@ export default function Header() {
 
         <div>
           <Link href="/profile" aria-label="Mon profil">
-            {initials}
+            <UserAvatar user={user} />
           </Link>
         </div>
       </nav>

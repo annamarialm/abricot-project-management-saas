@@ -1,17 +1,52 @@
-export default function TaskCard({ task }) {
+import StatusBadge from '@/components/StatusBadge/StatusBadge';
+
+import UserAvatar from '@/components/UserAvatar/UserAvatar';
+
+export default function TaskCard({ task, onEdit }) {
   return (
     <article>
-      <h3>{task.title}</h3>
+      <header>
+        <div>
+          <h3>{task.title}</h3>
+
+          <StatusBadge status={task.status} />
+        </div>
+
+        <button onClick={() => onEdit(task)}>Modifier</button>
+      </header>
 
       <p>{task.description}</p>
 
-      <p>Statut : {task.status}</p>
+      <div>
+        <p>
+          Échéance :{' '}
+          {task.dueDate
+            ? new Date(task.dueDate).toLocaleDateString('fr-FR')
+            : 'Aucune'}
+        </p>
 
-      <p>Priorité : {task.priority}</p>
+        <div>
+          <p>Assigné à :</p>
 
-      <p>Assignés : {task.assignees.length}</p>
+          {task.assignees.length > 0 ? (
+            <ul>
+              {task.assignees.map((assignee) => (
+                <li key={assignee.id}>
+                  <UserAvatar user={assignee.user} />
 
-      <p>Commentaires : {task.comments.length}</p>
+                  <span>{assignee.user.name}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Aucun assigné</p>
+          )}
+        </div>
+      </div>
+
+      <footer>
+        <p>Commentaires ({task.comments.length})</p>
+      </footer>
     </article>
   );
 }

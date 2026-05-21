@@ -6,18 +6,18 @@ import { getToken } from '@/api/auth';
 
 import TaskForm from '@/components/TaskForm/TaskForm';
 
-export default function CreateTaskForm({
-  projectId,
+export default function EditTaskForm({
+  task,
   contributors,
   onClose,
-  onTaskCreated,
+  onTaskUpdated,
 }) {
-  async function handleCreate(form) {
+  async function handleUpdate(form) {
     try {
       const token = getToken();
 
-      const response = await fetch(`${API_URL}/tasks`, {
-        method: 'POST',
+      const response = await fetch(`${API_URL}/tasks/${task.id}`, {
+        method: 'PUT',
 
         headers: {
           'Content-Type': 'application/json',
@@ -25,11 +25,7 @@ export default function CreateTaskForm({
           Authorization: `Bearer ${token}`,
         },
 
-        body: JSON.stringify({
-          ...form,
-
-          projectId,
-        }),
+        body: JSON.stringify(form),
       });
 
       const data = await response.json();
@@ -40,7 +36,7 @@ export default function CreateTaskForm({
         return;
       }
 
-      onTaskCreated();
+      onTaskUpdated();
 
       onClose();
     } catch (error) {
@@ -50,10 +46,11 @@ export default function CreateTaskForm({
 
   return (
     <TaskForm
+      task={task}
       contributors={contributors}
-      onSubmit={handleCreate}
-      submitLabel="+ Ajouter une tâche"
-      title="Créer une tâche"
+      onSubmit={handleUpdate}
+      submitLabel="Enregistrer"
+      title="Modifier"
     />
   );
 }
