@@ -1,0 +1,38 @@
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--radius-full);
+
+  background-color: #ffe8d9;
+
+  color: #0f0f0f;
+
+  font-size: var(--text-body-sm);
+
+  font-weight: var(--font-regular);
+
+  text-transform: uppercase;
+
+  flex-shrink: 0;
+}
+
+.user-avatar--small {
+  width: 32px;
+  height: 32px;
+
+  font-size: var(--text-body-xs);
+}
+
+.user-avatar--medium {
+  width: 65px;
+  height: 65px;
+}
+
+.user-avatar--large {
+  width: 80px;
+  height: 80px;
+
+  font-size: var(--text-body-md);
+}
