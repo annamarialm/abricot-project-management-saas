@@ -16,8 +16,10 @@ export default function TaskCard({
   onEdit,
   canEditTask,
   canComment,
+  buttonLabel = 'Modifier',
+  showComments = true,
 }) {
-  const [showComments, setShowComments] = useState(false);
+  const [showCommentsSection, setShowCommentsSection] = useState(false);
 
   const [commentText, setCommentText] = useState('');
 
@@ -72,11 +74,12 @@ export default function TaskCard({
 
           <StatusBadge status={task.status} />
         </div>
+
         {canEditTask && (
           <button type="button" onClick={() => onEdit(task)}>
-            Modifier
+            {buttonLabel}
           </button>
-        )}{' '}
+        )}
       </header>
 
       <p>{task.description}</p>
@@ -108,13 +111,16 @@ export default function TaskCard({
         </div>
       </div>
 
-      {canComment && (
+      {showComments && canComment && (
         <footer>
-          <button type="button" onClick={() => setShowComments(!showComments)}>
-            Commentaires ({comments.length}) {showComments ? '▲' : '▼'}
+          <button
+            type="button"
+            onClick={() => setShowCommentsSection(!showCommentsSection)}
+          >
+            Commentaires ({comments.length}) {showCommentsSection ? '▲' : '▼'}
           </button>
 
-          {showComments && (
+          {showCommentsSection && (
             <div>
               {comments.length > 0 ? (
                 <ul>
