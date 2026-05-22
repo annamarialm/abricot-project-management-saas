@@ -2,11 +2,15 @@
 
 import { useState } from 'react';
 
+import UserSearch from '@/components/UserSearch/UserSearch';
+
 export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
   const [form, setForm] = useState({
     name: project?.name || '',
 
     description: project?.description || '',
+
+    contributors: [],
   });
 
   function handleChange(event) {
@@ -17,10 +21,30 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
     });
   }
 
+  function handleAddUser(user) {
+    setForm((prev) => ({
+      ...prev,
+
+      contributors: [...prev.contributors, user],
+    }));
+  }
+
+  function handleRemoveUser(userId) {
+    setForm((prev) => ({
+      ...prev,
+
+      contributors: prev.contributors.filter((user) => user.id !== userId),
+    }));
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
-    onSubmit(form);
+    onSubmit({
+      ...form,
+
+      contributors: form.contributors.map((user) => user.email),
+    });
   }
 
   return (
@@ -49,6 +73,29 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
           value={form.description}
           onChange={handleChange}
         />
+      </div>
+
+      <div>
+        <h3>Contributeurs</h3>
+
+        <UserSearch
+          selectedUsers={form.contributors}
+          onAddUser={handleAddUser}
+        />
+
+        {form.contributors.length > 0 && (
+          <ul>
+            {form.contributors.map((user) => (
+              <li key={user.id}>
+                <span>{user.name}</span>
+
+                <button type="button" onClick={() => handleRemoveUser(user.id)}>
+                  ×
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <button type="submit">{submitLabel}</button>

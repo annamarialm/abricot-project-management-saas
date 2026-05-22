@@ -1,12 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import API_URL from '@/api/api';
+
 import { getToken } from '@/api/auth';
+
 import DashboardLayout from '@/layout/DashboardLayout/DashboardLayout';
+
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
+
 import Button from '@/components/Button/Button';
+
 import Modal from '@/components/Modal/Modal';
+
+import ProjectForm from '@/components/ProjectForm/ProjectForm';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -36,7 +44,63 @@ export default function ProjectsPage() {
           return;
         }
 
-        setProjects(data.data.projects);
+        const projectsWithProgress = await Promise.all(
+          data.data.projects.map(async (project) => {
+            try {
+              const tasksResponse = await fetch(
+                `${API_URL}/projects/${project.id}/tasks`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                },
+              );
+
+              const tasksData = await tasksResponse.json();
+
+              const tasks = tasksData.data.tasks || [];
+
+              const completedTasks = tasks.filter(
+                (task) => task.status === 'DONE',
+              ).length;
+
+              const totalTasks = tasks.length;
+
+              const percentage =
+                totalTasks > 0
+                  ? Math.round((completedTasks / totalTasks) * 100)
+                  : 0;
+
+              return {
+                ...project,
+
+                progress: {
+                  completedTasks,
+
+                  totalTasks,
+
+                  percentage,
+                },
+              };
+            } catch (error) {
+              console.error(error);
+
+              return {
+                ...project,
+
+                progress: {
+                  completedTasks: 0,
+
+                  totalTasks: 0,
+
+                  percentage: 0,
+                },
+              };
+            }
+          }),
+        );
+
+        setProjects(projectsWithProgress);
       } catch (error) {
         console.error(error);
 
@@ -48,6 +112,38 @@ export default function ProjectsPage() {
 
     fetchProjects();
   }, []);
+
+  async function handleCreateProject(form) {
+    try {
+      const token = getToken();
+
+      const response = await fetch(`${API_URL}/projects`, {
+        method: 'POST',
+
+        headers: {
+          'Content-Type': 'application/json',
+
+          Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error(data);
+
+        return;
+      }
+
+      setProjects((prev) => [data.data.project, ...prev]);
+
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <DashboardLayout>
@@ -62,7 +158,11 @@ export default function ProjectsPage() {
           </Button>
 
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <h2>Créer un projet</h2>
+            <ProjectForm
+              onSubmit={handleCreateProject}
+              submitLabel="Créer"
+              title="Créer un projet"
+            />
           </Modal>
 
           {loading && <p>Chargement...</p>}

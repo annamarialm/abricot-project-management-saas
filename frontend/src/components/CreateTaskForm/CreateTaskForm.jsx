@@ -16,7 +16,7 @@ export default function CreateTaskForm({
     try {
       const token = getToken();
 
-      const response = await fetch(`${API_URL}/tasks`, {
+      const response = await fetch(`${API_URL}/projects/${projectId}/tasks`, {
         method: 'POST',
 
         headers: {
@@ -27,8 +27,6 @@ export default function CreateTaskForm({
 
         body: JSON.stringify({
           ...form,
-
-          projectId,
         }),
       });
 

@@ -26,11 +26,14 @@ import TasksHeader from '@/components/TasksHeader/TasksHeader';
 import { useAuth } from '@/components/AuthProvider/AuthProvider';
 
 import EditProjectForm from '@/components/EditProjectForm/EditProjectForm';
+import Link from 'next/link';
 
 export default function ProjectPage({ params }) {
   const resolvedParams = use(params);
 
   const [tasks, setTasks] = useState([]);
+
+  const [project, setProject] = useState(null);
 
   const [contributors, setContributors] = useState([]);
 
@@ -50,11 +53,27 @@ export default function ProjectPage({ params }) {
 
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
-  const [project, setProject] = useState(null);
-
   const { user } = useAuth();
 
+  const currentMember = contributors.find(
+    (member) => member.user.id === user?.id,
+  );
+
   const isOwner = owner?.id === user?.id;
+
+  const role = currentMember?.role || null;
+
+  const canEditProject = isOwner || role === 'ADMIN';
+
+  const canManageContributors = isOwner || role === 'ADMIN';
+
+  const canCreateTask = isOwner || role === 'ADMIN' || role === 'CONTRIBUTOR';
+
+  const canEditTask = isOwner || role === 'ADMIN' || role === 'CONTRIBUTOR';
+
+  const canDeleteTask = isOwner || role === 'ADMIN' || role === 'CONTRIBUTOR';
+
+  const canComment = isOwner || role === 'ADMIN' || role === 'CONTRIBUTOR';
 
   const fetchTasks = useCallback(async () => {
     try {
@@ -106,8 +125,8 @@ export default function ProjectPage({ params }) {
       }
 
       setContributors(data.data.project.members || []);
-      setOwner(data.data.project.owner);
       setProject(data.data.project);
+      setOwner(data.data.project.owner);
     } catch (error) {
       console.error(error);
     }
@@ -139,20 +158,29 @@ export default function ProjectPage({ params }) {
     <DashboardLayout>
       <main>
         <section>
-          <h1>Projet</h1>
+          <div>
+            <Link href="/projects">←</Link>
 
-          {isOwner && (
+            <h1>{project?.name || 'Projet'}</h1>
+          </div>
+
+          {canEditProject && (
             <button type="button" onClick={() => setIsProjectModalOpen(true)}>
               Modifier
             </button>
           )}
 
-          <Button onClick={() => setIsCreateModalOpen(true)}>
-            + Créer une tâche
-          </Button>
+          {canCreateTask && (
+            <>
+              <Button onClick={() => setIsCreateModalOpen(true)}>
+                + Créer une tâche
+              </Button>
 
-          <button onClick={() => setIsAIModalOpen(true)}>IA</button>
-
+              <button type="button" onClick={() => setIsAIModalOpen(true)}>
+                IA
+              </button>
+            </>
+          )}
           {owner && (
             <ContributorsBar contributors={contributors} owner={owner} />
           )}
@@ -167,7 +195,14 @@ export default function ProjectPage({ params }) {
 
           <div>
             {tasks.map((task) => (
-              <TaskCard key={task.id} task={task} onEdit={handleEditTask} />
+              <TaskCard
+                key={task.id}
+                task={task}
+                projectId={resolvedParams.id}
+                onEdit={handleEditTask}
+                canEditTask={canEditTask}
+                canComment={canComment}
+              />
             ))}
           </div>
 
@@ -188,6 +223,7 @@ export default function ProjectPage({ params }) {
               <EditTaskForm
                 task={selectedTask}
                 contributors={contributors}
+                projectId={resolvedParams.id}
                 onTaskUpdated={fetchTasks}
                 onClose={closeEditModal}
               />

@@ -1,21 +1,29 @@
 import UserAvatar from '@/components/UserAvatar/UserAvatar';
 
 export default function ContributorsBar({ contributors, owner }) {
+  const allContributors = [
+    {
+      user: owner,
+      role: 'ADMIN',
+    },
+
+    ...contributors.filter((member) => member.user.id !== owner.id),
+  ];
+
   return (
     <section>
       <div>
-        <h2>Contributeurs {contributors.length} personnes</h2>
+        <h2>Contributeurs {allContributors.length} personnes</h2>
       </div>
 
       <div>
-        {contributors.map((member) => {
+        {allContributors.map((member) => {
           const isOwner = member.user.id === owner.id;
 
           return (
             <div key={member.user.id}>
               <UserAvatar user={member.user} />
-
-              <span>{isOwner ? 'Propriétaire' : member.user.name}</span>
+              <span>{member.user.name}</span>{' '}
             </div>
           );
         })}
