@@ -25,9 +25,11 @@
 
   background-color: var(--color-surface);
 
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
 
-  font-size: var(--text-body-md);
+  font-size: var(--text-body-xs);
+
+  font-weight: var(--font-regular);
 
   padding: 19px 17px;
 
@@ -46,12 +48,16 @@
 .form-textarea {
   min-height: 53px;
 
+  height: 53px;
+
   resize: vertical;
 }
 
 .form-input::placeholder,
 .form-textarea::placeholder {
   color: var(--color-text-secondary);
+
+  opacity: 1;
 }
 
 .form-input:focus,

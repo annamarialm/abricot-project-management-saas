@@ -1,5 +1,7 @@
 'use client';
 
+import './UserSearch.css';
+
 import { useEffect, useState } from 'react';
 
 import API_URL from '@/api/api';
@@ -49,8 +51,9 @@ export default function UserSearch({ selectedUsers, onAddUser }) {
   }, [query, selectedUsers]);
 
   return (
-    <div>
+    <div className="user-search">
       <input
+        className="form-input"
         type="text"
         placeholder="Choisir un ou plusieurs collaborateurs"
         value={query}
@@ -58,11 +61,12 @@ export default function UserSearch({ selectedUsers, onAddUser }) {
       />
 
       {results.length > 0 && (
-        <ul>
+        <ul className="user-search__results">
           {results.map((user) => (
             <li key={user.id}>
               <button
                 type="button"
+                className="user-search__result-button"
                 onClick={() => {
                   onAddUser(user);
 
@@ -71,7 +75,9 @@ export default function UserSearch({ selectedUsers, onAddUser }) {
                   setResults([]);
                 }}
               >
-                {user.name} ({user.email})
+                <span className="user-search__user-name">{user.name}</span>
+
+                <span className="user-search__user-email">{user.email}</span>
               </button>
             </li>
           ))}

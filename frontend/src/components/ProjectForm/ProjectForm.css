@@ -1,0 +1,85 @@
+.project-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: var(--space-lg);
+}
+
+.project-form__title {
+  font-size: var(--text-h4);
+
+  font-weight: var(--font-semibold);
+}
+
+.project-form__contributors-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: var(--space-xs);
+
+  margin-top: var(--space-sm);
+
+  list-style: none;
+}
+
+.project-form__contributors-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: var(--space-xs);
+
+  padding: 6px 12px;
+
+  border-radius: var(--radius-full);
+
+  background-color: var(--color-background);
+
+  font-size: var(--text-body-xs);
+
+  color: var(--color-text-secondary);
+}
+
+.project-form__remove-user-button {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  width: 18px;
+
+  height: 18px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: var(--color-text-secondary);
+
+  cursor: pointer;
+
+  transition: color var(--transition-fast);
+}
+
+.project-form__remove-user-button:hover {
+  color: var(--color-text-primary);
+}
+
+.project-form__actions {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: var(--space-md);
+
+  margin-top: var(--space-lg);
+}
+
+.project-form-submit {
+  width: fit-content;
+}

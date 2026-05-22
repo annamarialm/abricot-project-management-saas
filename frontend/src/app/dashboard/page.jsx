@@ -219,7 +219,7 @@ export default function DashboardPage() {
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <ProjectForm
             onSubmit={handleCreateProject}
-            submitLabel="Créer"
+            submitLabel="Ajouter un projet"
             title="Créer un projet"
           />
         </Modal>

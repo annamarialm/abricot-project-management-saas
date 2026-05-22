@@ -8,8 +8,6 @@ import { getToken } from '@/api/auth';
 
 import ProjectForm from '@/components/ProjectForm/ProjectForm';
 
-import Button from '@/components/Button/Button';
-
 export default function EditProjectForm({
   project,
   onClose,
@@ -82,16 +80,12 @@ export default function EditProjectForm({
   }
 
   return (
-    <div>
-      <ProjectForm
-        project={project}
-        onSubmit={handleUpdate}
-        submitLabel="Enregistrer"
-        title="Modifier le projet"
-      />
-      <Button type="button" variant="danger" onClick={handleDelete}>
-        Supprimer le projet
-      </Button>{' '}
-    </div>
+    <ProjectForm
+      project={project}
+      onSubmit={handleUpdate}
+      onDelete={handleDelete}
+      submitLabel="Enregistrer"
+      title="Modifier le projet"
+    />
   );
 }

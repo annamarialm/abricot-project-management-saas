@@ -16,8 +16,11 @@ export default function Dropdown({ label, items, selectedIds, onToggle }) {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{selectedIds.length} collaborateurs</span>
-
+        <span>
+          {selectedIds.length > 0
+            ? `${selectedIds.length} collaborateurs`
+            : 'Choisir un ou plusieurs collaborateurs'}
+        </span>
         <span>{isOpen ? '▲' : '▼'}</span>
       </button>
 

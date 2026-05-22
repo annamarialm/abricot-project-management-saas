@@ -1,12 +1,22 @@
 'use client';
 
+import './ProjectForm.css';
+
 import { useState } from 'react';
 
 import UserSearch from '@/components/UserSearch/UserSearch';
 
 import Button from '@/components/Button/Button';
 
-export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
+import '@/styles/forms.css';
+
+export default function ProjectForm({
+  project,
+  onSubmit,
+  onDelete,
+  submitLabel,
+  title,
+}) {
   const [form, setForm] = useState({
     name: project?.name || '',
 
@@ -52,12 +62,16 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{title}</h2>
-      <div>
-        <label htmlFor="name">Nom du projet</label>
+    <form className="project-form" onSubmit={handleSubmit}>
+      <h2 className="project-form__title">{title}</h2>
+
+      <div className="form-group">
+        <label className="form-label" htmlFor="name">
+          Titre*
+        </label>
 
         <input
+          className="form-input"
           id="name"
           name="name"
           type="text"
@@ -66,18 +80,23 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
           required
         />
       </div>
-      <div>
-        <label htmlFor="description">Description</label>
+
+      <div className="form-group">
+        <label className="form-label" htmlFor="description">
+          Description*
+        </label>
 
         <textarea
+          className="form-textarea"
           id="description"
           name="description"
           value={form.description}
           onChange={handleChange}
         />
       </div>
-      <div>
-        <h3>Contributeurs</h3>
+
+      <div className="form-group">
+        <label className="form-label">Contributeurs</label>
 
         <UserSearch
           selectedUsers={form.contributors}
@@ -85,12 +104,17 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
         />
 
         {form.contributors.length > 0 && (
-          <ul>
+          <ul className="project-form__contributors-list">
             {form.contributors.map((user) => (
-              <li key={user.id}>
+              <li key={user.id} className="project-form__contributors-item">
                 <span>{user.name}</span>
 
-                <button type="button" onClick={() => handleRemoveUser(user.id)}>
+                <button
+                  type="button"
+                  className="project-form__remove-user-button"
+                  onClick={() => handleRemoveUser(user.id)}
+                  aria-label={`Retirer ${user.name}`}
+                >
                   ×
                 </button>
               </li>
@@ -98,9 +122,22 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
           </ul>
         )}
       </div>
-      <Button type="submit" disabled={!isFormValid}>
-        {submitLabel}
-      </Button>{' '}
+
+      <div className="project-form__actions">
+        <Button
+          className="project-form-submit"
+          type="submit"
+          disabled={!isFormValid}
+        >
+          {submitLabel}
+        </Button>
+
+        {onDelete && (
+          <Button type="button" variant="danger" onClick={onDelete}>
+            Supprimer le projet
+          </Button>
+        )}
+      </div>
     </form>
   );
 }

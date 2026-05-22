@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import Image from 'next/image';
+
 import Button from '@/components/Button/Button';
 import Dropdown from '@/components/Dropdown/Dropdown';
 import StatusBadge from '@/components/StatusBadge/StatusBadge';
@@ -30,7 +32,10 @@ export default function TaskForm({
     assigneeIds: task.assignees?.map((assignee) => assignee.user.id) || [],
   });
 
-  const isFormValid = form.title.trim() !== '';
+  const isFormValid =
+    form.title.trim() !== '' &&
+    form.description.trim() !== '' &&
+    form.dueDate.trim() !== '';
 
   function handleChange(event) {
     setForm({
@@ -70,7 +75,7 @@ export default function TaskForm({
 
       <div className="form-group">
         <label className="form-label" htmlFor="title">
-          Titre
+          Titre*
         </label>
 
         <input
@@ -86,7 +91,7 @@ export default function TaskForm({
 
       <div className="form-group">
         <label className="form-label" htmlFor="description">
-          Description
+          Description*
         </label>
 
         <textarea
@@ -95,22 +100,35 @@ export default function TaskForm({
           name="description"
           value={form.description}
           onChange={handleChange}
+          required
         />
       </div>
 
       <div className="form-group">
         <label className="form-label" htmlFor="dueDate">
-          Échéance
+          Échéance*
         </label>
 
-        <input
-          className="form-input"
-          id="dueDate"
-          name="dueDate"
-          type="date"
-          value={form.dueDate}
-          onChange={handleChange}
-        />
+        <div className="task-form-date-input">
+          <input
+            className="form-input"
+            id="dueDate"
+            name="dueDate"
+            type="date"
+            value={form.dueDate}
+            onChange={handleChange}
+            required
+          />
+
+          <Image
+            className="task-form-date-icon"
+            src="/icons/calendar.svg"
+            alt=""
+            width={18}
+            height={18}
+            aria-hidden="true"
+          />
+        </div>
       </div>
 
       <Dropdown

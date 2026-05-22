@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import Image from 'next/image';
+
 import API_URL from '@/api/api';
 
 import { getToken } from '@/api/auth';
@@ -85,12 +87,24 @@ export default function TaskCard({
       <p>{task.description}</p>
 
       <div>
-        <p>
-          Échéance :{' '}
-          {task.dueDate
-            ? new Date(task.dueDate).toLocaleDateString('fr-FR')
-            : 'Aucune'}
-        </p>
+        <div className="task-card__meta-item">
+          <Image
+            src="/icons/calendar.svg"
+            alt=""
+            width={14}
+            height={14}
+            aria-hidden="true"
+          />
+
+          <span>
+            {task.dueDate
+              ? new Date(task.dueDate).toLocaleDateString('fr-FR', {
+                  day: 'numeric',
+                  month: 'long',
+                })
+              : 'Aucune'}
+          </span>
+        </div>
 
         <div>
           <p>Assigné à :</p>
