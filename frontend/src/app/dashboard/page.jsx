@@ -140,79 +140,113 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <main>
-        <section>
-          <h1>Tableau de bord</h1>
+      <main className="dashboard-page">
+        <section className="dashboard-page__hero">
+          <div className="dashboard-page__intro">
+            <h1 className="dashboard-page__title">Tableau de bord</h1>
 
-          <p>
-            Bonjour {user.name || user.email}, voici un aperçu de vos projets et
-            tâches
-          </p>
+            <p className="dashboard-page__subtitle">
+              Bonjour {user.name || user.email}, voici un aperçu de vos projets
+              et tâches
+            </p>
+          </div>
 
           <Button onClick={() => setIsModalOpen(true)}>
             + Créer un projet
           </Button>
         </section>
 
-        <section>
-          <div>
-            <button type="button" onClick={() => setView('list')}>
-              Liste
+        <section className="dashboard-page__content">
+          <div className="dashboard-page__view-switcher">
+            <button
+              type="button"
+              onClick={() => setView('list')}
+              className={`dashboard-page__view-button ${
+                view === 'list' ? 'dashboard-page__view-button--active' : ''
+              }`}
+            >
+              <img src="/icons/liste.svg" alt="" aria-hidden="true" />
+
+              <span>Liste</span>
             </button>
 
-            <button type="button" onClick={() => setView('kanban')}>
-              Kanban
+            <button
+              type="button"
+              onClick={() => setView('kanban')}
+              className={`dashboard-page__view-button ${
+                view === 'kanban' ? 'dashboard-page__view-button--active' : ''
+              }`}
+            >
+              <img src="/icons/kanban.svg" alt="" aria-hidden="true" />
+
+              <span>Kanban</span>
             </button>
           </div>
-
           {error && <p>{error}</p>}
 
           {view === 'list' && (
-            <>
-              <div>
-                <h2>Mes tâches assignées</h2>
+            <section className="surface-section">
+              <div className="section-header">
+                <div className="section-intro">
+                  <h2 className="section-title">Mes tâches assignées</h2>
 
-                <p>Par ordre de priorité</p>
+                  <p className="section-subtitle">Par ordre de priorité</p>
+                </div>
+                <div className="dashboard-page__search">
+                  <input type="search" placeholder="Rechercher une tâche" />
+
+                  <img src="/icons/search.svg" alt="" aria-hidden="true" />
+                </div>{' '}
               </div>
 
               {!tasks.length ? (
                 <p>Aucune tâche assignée.</p>
               ) : (
-                <div>
+                <div className="dashboard-page__task-list">
                   {tasks.map((task) => (
                     <DashboardTaskCard key={task.id} task={task} />
                   ))}
                 </div>
               )}
-            </>
+            </section>
           )}
 
           {view === 'kanban' && (
-            <div>
-              <div>
-                <h2>À faire ({todoTasks.length})</h2>
+            <section className="dashboard-page__kanban">
+              <div className="surface-section">
+                <h2 className="section-title">À faire ({todoTasks.length})</h2>
 
-                {todoTasks.map((task) => (
-                  <DashboardTaskCard key={task.id} task={task} />
-                ))}
+                <div className="dashboard-page__task-list">
+                  {todoTasks.map((task) => (
+                    <DashboardTaskCard key={task.id} task={task} />
+                  ))}
+                </div>
               </div>
 
-              <div>
-                <h2>En cours ({inProgressTasks.length})</h2>
+              <div className="surface-section">
+                <h2 className="section-title">
+                  En cours ({inProgressTasks.length})
+                </h2>
 
-                {inProgressTasks.map((task) => (
-                  <DashboardTaskCard key={task.id} task={task} />
-                ))}
+                <div className="dashboard-page__task-list">
+                  {inProgressTasks.map((task) => (
+                    <DashboardTaskCard key={task.id} task={task} />
+                  ))}
+                </div>
               </div>
 
-              <div>
-                <h2>Terminées ({doneTasks.length})</h2>
+              <div className="surface-section">
+                <h2 className="section-title">
+                  Terminées ({doneTasks.length})
+                </h2>
 
-                {doneTasks.map((task) => (
-                  <DashboardTaskCard key={task.id} task={task} />
-                ))}
+                <div className="dashboard-page__task-list">
+                  {doneTasks.map((task) => (
+                    <DashboardTaskCard key={task.id} task={task} />
+                  ))}
+                </div>
               </div>
-            </div>
+            </section>
           )}
         </section>
 

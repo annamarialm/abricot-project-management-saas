@@ -37,6 +37,9 @@
   --text-body-xs: 12px;
   --text-body-2xs: 10px;
 
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.4;
+
   /* FONT WEIGHTS */
 
   --font-regular: 400;
