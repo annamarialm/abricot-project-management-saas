@@ -8,7 +8,7 @@ import API_URL from '@/api/api';
 import { getToken, removeToken } from '@/api/auth';
 
 import { useAuth } from '@/components/AuthProvider/AuthProvider';
-
+import Button from '@/components/Button/Button';
 export default function ProfilePage() {
   const router = useRouter();
 
@@ -270,18 +270,18 @@ export default function ProfilePage() {
           )}
 
           {!isEditing ? (
-            <button onClick={handleEdit}>Modifier les informations</button>
+            <Button onClick={handleEdit}>Modifier les informations</Button>
           ) : (
             <>
-              <button onClick={handleSave}>
+              <Button onClick={handleSave}>
                 Enregistrer les modifications
-              </button>
+              </Button>
 
-              <button onClick={handleCancel}>Annuler</button>
+              <Button onClick={handleCancel}>Annuler</Button>
             </>
           )}
 
-          <button onClick={handleLogout}>Se déconnecter</button>
+          <Button onClick={handleLogout}>Se déconnecter</Button>
         </section>
       </main>
     </DashboardLayout>

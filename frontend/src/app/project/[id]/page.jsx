@@ -175,10 +175,14 @@ export default function ProjectPage({ params }) {
               <Button onClick={() => setIsCreateModalOpen(true)}>
                 + Créer une tâche
               </Button>
-
-              <button type="button" onClick={() => setIsAIModalOpen(true)}>
+              <Button
+                type="button"
+                variant="accent"
+                size="small"
+                onClick={() => setIsAIModalOpen(true)}
+              >
                 IA
-              </button>
+              </Button>{' '}
             </>
           )}
           {owner && (

@@ -7,7 +7,7 @@ import AuthLayout from '@/layout/AuthLayout/AuthLayout';
 import API_URL from '@/api/api';
 import { setToken } from '@/api/auth';
 import { useAuth } from '@/components/AuthProvider/AuthProvider';
-
+import Button from '@/components/Button/Button';
 import './Login.css';
 
 export default function LoginPage() {
@@ -110,7 +110,7 @@ export default function LoginPage() {
 
             {errorMessage && <p role="alert">{errorMessage}</p>}
 
-            <button type="submit">Se connecter</button>
+            <Button type="submit">Se connecter</Button>
           </form>
 
           <p>

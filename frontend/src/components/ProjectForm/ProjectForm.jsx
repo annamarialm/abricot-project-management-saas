@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import UserSearch from '@/components/UserSearch/UserSearch';
 
+import Button from '@/components/Button/Button';
+
 export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
   const [form, setForm] = useState({
     name: project?.name || '',
@@ -12,6 +14,8 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
 
     contributors: [],
   });
+
+  const isFormValid = form.name.trim() !== '';
 
   function handleChange(event) {
     setForm({
@@ -50,7 +54,6 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
   return (
     <form onSubmit={handleSubmit}>
       <h2>{title}</h2>
-
       <div>
         <label htmlFor="name">Nom du projet</label>
 
@@ -63,7 +66,6 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
           required
         />
       </div>
-
       <div>
         <label htmlFor="description">Description</label>
 
@@ -74,7 +76,6 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
           onChange={handleChange}
         />
       </div>
-
       <div>
         <h3>Contributeurs</h3>
 
@@ -97,8 +98,9 @@ export default function ProjectForm({ project, onSubmit, submitLabel, title }) {
           </ul>
         )}
       </div>
-
-      <button type="submit">{submitLabel}</button>
+      <Button type="submit" disabled={!isFormValid}>
+        {submitLabel}
+      </Button>{' '}
     </form>
   );
 }

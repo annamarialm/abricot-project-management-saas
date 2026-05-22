@@ -107,7 +107,7 @@ export default function DashboardPage() {
     }
   }
 
-  const currentDate = new Date();
+  const currentDate = new Date('2024-01-01');
 
   const currentMonthTasks = tasks.filter((task) => {
     if (!task.dueDate) {

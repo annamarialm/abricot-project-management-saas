@@ -2,24 +2,32 @@
 
 import { useState } from 'react';
 
+import './Dropdown.css';
+
 export default function Dropdown({ label, items, selectedIds, onToggle }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
-      <label>{label}</label>
+    <div className="dropdown">
+      <label className="form-label">{label}</label>
 
-      <button type="button" onClick={() => setIsOpen(!isOpen)}>
-        {selectedIds.length} collaborateurs
+      <button
+        className="dropdown-trigger"
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>{selectedIds.length} collaborateurs</span>
+
+        <span>{isOpen ? '▲' : '▼'}</span>
       </button>
 
       {isOpen && (
-        <ul>
+        <ul className="dropdown-menu">
           {items.map((item) => {
             const isSelected = selectedIds.includes(item.userId);
 
             return (
-              <li key={item.userId}>
+              <li className="dropdown-item" key={item.userId}>
                 <label>
                   <input
                     type="checkbox"

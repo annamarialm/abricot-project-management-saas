@@ -1,0 +1,144 @@
+.button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--space-xs);
+
+  border: none;
+
+  border-radius: var(--radius-md);
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
+
+  font-family: var(--font-body);
+
+  font-weight: var(--font-regular);
+  white-space: nowrap;
+}
+
+/* =========================
+   VARIANTS
+========================= */
+
+.button--primary {
+  background-color: var(--color-primary);
+
+  color: var(--color-surface);
+}
+
+.button--primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.button--secondary {
+  background-color: #f3f4f6;
+
+  color: var(--color-text-primary);
+}
+
+.button--secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.button--outline {
+  background-color: transparent;
+
+  color: var(--color-accent);
+
+  border: var(--border-width) solid var(--color-accent);
+}
+
+.button--outline:hover {
+  background-color: #fff7ed;
+}
+
+.button--danger {
+  background-color: var(--color-surface);
+
+  color: #dc2626;
+
+  border: 1px solid #fecaca;
+}
+
+.button--danger:hover {
+  background-color: #fef2f2;
+}
+
+.button--accent {
+  background-color: var(--color-accent);
+
+  color: var(--color-surface);
+}
+
+.button--accent:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   SIZES
+========================= */
+
+.button--small {
+  min-height: 36px;
+
+  padding: 0 var(--space-sm);
+
+  font-size: var(--text-body-sm);
+}
+
+.button--medium {
+  min-height: 44px;
+
+  padding: 0 var(--space-md);
+
+  font-size: var(--text-body-md);
+}
+
+.button--large {
+  min-height: 52px;
+
+  padding: 0 var(--space-lg);
+
+  font-size: var(--text-body-lg);
+}
+
+/* =========================
+   STATES
+========================= */
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  background-color: var(--color-disabled-bg);
+
+  color: var(--color-disabled-text);
+
+  cursor: not-allowed;
+}
+
+.button:focus-visible {
+  outline: 3px solid rgba(211, 89, 11, 0.3);
+
+  outline-offset: 2px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .button--large {
+    width: 100%;
+  }
+}

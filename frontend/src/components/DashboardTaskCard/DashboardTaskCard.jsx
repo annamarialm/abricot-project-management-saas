@@ -1,5 +1,5 @@
 import StatusBadge from '@/components/StatusBadge/StatusBadge';
-
+import Button from '@/components/Button/Button';
 export default function DashboardTaskCard({ task }) {
   function formatDate(date) {
     if (!date) {
@@ -22,7 +22,7 @@ export default function DashboardTaskCard({ task }) {
             <StatusBadge status={task.status} />
           </div>
 
-          <button type="button">Voir</button>
+          <Button size="small">Voir</Button>
         </div>
 
         <p>{task.description}</p>

@@ -2,12 +2,19 @@
 
 import { useState } from 'react';
 
+import Button from '@/components/Button/Button';
 import Dropdown from '@/components/Dropdown/Dropdown';
+import StatusBadge from '@/components/StatusBadge/StatusBadge';
+
+import '@/styles/forms.css';
+
+import './TaskForm.css';
 
 export default function TaskForm({
   task = {},
   contributors = [],
   onSubmit,
+  onDelete,
   submitLabel,
   title,
 }) {
@@ -22,6 +29,8 @@ export default function TaskForm({
 
     assigneeIds: task.assignees?.map((assignee) => assignee.user.id) || [],
   });
+
+  const isFormValid = form.title.trim() !== '';
 
   function handleChange(event) {
     setForm({
@@ -56,13 +65,16 @@ export default function TaskForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{title}</h2>
+    <form className="task-form" onSubmit={handleSubmit}>
+      <h2 className="task-form-title">{title}</h2>
 
-      <div>
-        <label htmlFor="title">Titre</label>
+      <div className="form-group">
+        <label className="form-label" htmlFor="title">
+          Titre
+        </label>
 
         <input
+          className="form-input"
           id="title"
           name="title"
           type="text"
@@ -72,10 +84,13 @@ export default function TaskForm({
         />
       </div>
 
-      <div>
-        <label htmlFor="description">Description</label>
+      <div className="form-group">
+        <label className="form-label" htmlFor="description">
+          Description
+        </label>
 
         <textarea
+          className="form-textarea"
           id="description"
           name="description"
           value={form.description}
@@ -83,10 +98,13 @@ export default function TaskForm({
         />
       </div>
 
-      <div>
-        <label htmlFor="dueDate">Échéance</label>
+      <div className="form-group">
+        <label className="form-label" htmlFor="dueDate">
+          Échéance
+        </label>
 
         <input
+          className="form-input"
           id="dueDate"
           name="dueDate"
           type="date"
@@ -102,37 +120,45 @@ export default function TaskForm({
         onToggle={toggleAssignee}
       />
 
-      <div>
-        <label>Statut</label>
+      <div className="form-group">
+        <label className="form-label">Statut</label>
 
-        <div>
-          <button
-            type="button"
-            aria-pressed={form.status === 'TODO'}
+        <div className="task-form-status-options">
+          <StatusBadge
+            status="TODO"
+            isActive={form.status === 'TODO'}
             onClick={() => handleStatusChange('TODO')}
-          >
-            À faire
-          </button>
+          />
 
-          <button
-            type="button"
-            aria-pressed={form.status === 'IN_PROGRESS'}
+          <StatusBadge
+            status="IN_PROGRESS"
+            isActive={form.status === 'IN_PROGRESS'}
             onClick={() => handleStatusChange('IN_PROGRESS')}
-          >
-            En cours
-          </button>
+          />
 
-          <button
-            type="button"
-            aria-pressed={form.status === 'DONE'}
+          <StatusBadge
+            status="DONE"
+            isActive={form.status === 'DONE'}
             onClick={() => handleStatusChange('DONE')}
-          >
-            Terminée
-          </button>
+          />
         </div>
       </div>
 
-      <button type="submit">{submitLabel}</button>
+      <div className="task-form-actions">
+        <Button
+          className="task-form-submit"
+          type="submit"
+          disabled={!isFormValid}
+        >
+          {submitLabel}
+        </Button>
+
+        {onDelete && (
+          <Button type="button" variant="danger" onClick={onDelete}>
+            Supprimer la tâche
+          </Button>
+        )}
+      </div>
     </form>
   );
 }

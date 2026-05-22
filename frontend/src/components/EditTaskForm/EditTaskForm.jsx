@@ -86,18 +86,13 @@ export default function EditTaskForm({
   }
 
   return (
-    <div>
-      <TaskForm
-        task={task}
-        contributors={contributors}
-        onSubmit={handleUpdate}
-        submitLabel="Enregistrer"
-        title="Modifier"
-      />
-
-      <button type="button" onClick={handleDelete}>
-        Supprimer la tâche
-      </button>
-    </div>
+    <TaskForm
+      task={task}
+      contributors={contributors}
+      onSubmit={handleUpdate}
+      submitLabel="Enregistrer"
+      title="Modifier"
+      onDelete={handleDelete}
+    />
   );
 }
