@@ -1,0 +1,187 @@
+.project-page {
+  display: flex;
+  flex-direction: column;
+
+  gap: 40px;
+
+  padding-top: 40px;
+}
+
+.project-page__hero {
+  display: flex;
+  flex-direction: column;
+
+  gap: 40px;
+}
+
+.project-page__hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 32px;
+}
+
+.project-page__hero-left {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 24px;
+
+  flex: 1;
+}
+
+.project-page__back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  background-color: var(--color-surface);
+
+  border: var(--border-width) solid var(--color-border);
+
+  border-radius: 10px;
+
+  font-size: 24px;
+
+  color: var(--color-text-primary);
+
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.project-page__back-button:hover {
+  background-color: #f9fafb;
+
+  border-color: #d1d5db;
+}
+
+.project-page__intro {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.project-page__title-row {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  flex-wrap: wrap;
+}
+
+.project-page__title {
+  font-family: var(--font-heading);
+
+  font-size: 24px;
+
+  font-weight: var(--font-semibold);
+
+  line-height: 100%;
+
+  letter-spacing: 0;
+
+  color: #1f1f1f;
+}
+
+.project-page__edit-link {
+  border: none;
+
+  background: transparent;
+
+  padding: 0;
+
+  font-family: var(--font-body);
+
+  font-size: 14px;
+
+  font-weight: var(--font-regular);
+
+  line-height: 100%;
+
+  letter-spacing: 0;
+
+  text-decoration: underline;
+
+  color: #d3590b;
+
+  cursor: pointer;
+}
+
+.project-page__subtitle {
+  font-family: var(--font-body);
+
+  font-size: 18px;
+
+  font-weight: var(--font-regular);
+
+  line-height: 100%;
+
+  letter-spacing: 0;
+
+  color: #6b7280;
+}
+
+.project-page__actions {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  flex-shrink: 0;
+}
+
+.project-page__tasks {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+/* TABLET */
+
+@media (max-width: 1024px) {
+  .project-page__hero-content {
+    flex-direction: column;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .project-page {
+    gap: 32px;
+
+    padding-top: 24px;
+  }
+
+  .project-page__hero-left {
+    flex-direction: column;
+
+    gap: 20px;
+  }
+
+  .project-page__title {
+    font-size: 32px;
+  }
+
+  .project-page__actions {
+    width: 100%;
+
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .project-page__actions .button {
+    width: 100%;
+  }
+}

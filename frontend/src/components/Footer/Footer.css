@@ -39,18 +39,24 @@
 
 @media (max-width: 768px) {
   .footer {
-    height: auto;
+    height: 56px;
   }
 
   .footer__content {
-    flex-direction: column;
+    flex-direction: row;
 
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
 
-    gap: var(--space-sm);
+    padding: 0 20px;
+  }
 
-    padding: var(--space-md);
+  .footer__logo img {
+    width: 80px;
+    height: auto;
+  }
 
-    text-align: center;
+  .footer__text {
+    font-size: 12px;
   }
 }

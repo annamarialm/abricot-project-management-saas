@@ -5,6 +5,7 @@
 
   padding-top: 40px;
 }
+
 .dashboard-page__hero {
   display: flex;
   justify-content: space-between;
@@ -25,23 +26,24 @@
 
   font-weight: var(--font-semibold);
 
-  color: var(--color-text-primary);
-
   line-height: var(--line-height-tight);
+
+  color: var(--color-text-primary);
 }
 
 .dashboard-page__subtitle {
   font-size: var(--text-body-md);
 
-  color: var(--color-text-secondary);
-
   line-height: var(--line-height-normal);
+
+  color: var(--color-text-secondary);
 }
 
 .dashboard-page__content {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+
+  gap: 0;
 }
 
 .dashboard-page__view-switcher {
@@ -88,16 +90,36 @@
 .dashboard-page__view-button img {
   flex-shrink: 0;
 }
+
 .dashboard-page__task-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+.dashboard-page__task-list--kanban {
+  gap: 16px;
+}
+
 .dashboard-page__kanban {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(3, 419px);
+  gap: 22px;
+
+  align-items: start;
+
+  overflow-x: auto;
+}
+
+.surface-section--kanban {
+  gap: 41px;
+
+  width: 419px;
+  min-height: 419px;
+
+  padding: 40px 24px;
+
+  border-color: #ffe0e0;
 }
 
 .section-title {
@@ -107,20 +129,24 @@
 
   font-weight: var(--font-semibold);
 
-  color: var(--color-text-primary);
-
   line-height: var(--line-height-tight);
+
+  color: var(--color-text-primary);
+}
+
+.section-subtitle {
+  line-height: var(--line-height-normal);
 }
 
 .dashboard-page__search {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  justify-content: space-between;
 
   width: 357px;
   height: 63px;
 
-  padding: 23px 32px;
+  padding: 0 32px;
 
   background-color: var(--color-surface);
 
@@ -152,6 +178,8 @@
 
   font-size: var(--text-body-sm);
 
+  line-height: var(--line-height-normal);
+
   color: var(--color-text-primary);
 
   outline: none;
@@ -166,6 +194,11 @@
 @media (max-width: 1024px) {
   .dashboard-page__kanban {
     grid-template-columns: 1fr;
+  }
+
+  .surface-section--kanban {
+    width: 100%;
+    min-height: auto;
   }
 }
 
@@ -188,5 +221,11 @@
 
   .dashboard-page__search {
     width: 100%;
+  }
+
+  .surface-section--kanban {
+    gap: 32px;
+
+    padding: 24px 16px;
   }
 }

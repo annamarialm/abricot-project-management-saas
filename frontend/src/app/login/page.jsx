@@ -1,21 +1,34 @@
 'use client';
 
 import { useState } from 'react';
+
+import Image from 'next/image';
+
 import Link from 'next/link';
+
 import { useRouter } from 'next/navigation';
+
 import AuthLayout from '@/layout/AuthLayout/AuthLayout';
+
 import API_URL from '@/api/api';
+
 import { setToken } from '@/api/auth';
+
 import { useAuth } from '@/components/AuthProvider/AuthProvider';
+
 import Button from '@/components/Button/Button';
+
 import './Login.css';
 
 export default function LoginPage() {
   const router = useRouter();
+
   const { login } = useAuth();
 
   const [email, setEmail] = useState('');
+
   const [password, setPassword] = useState('');
+
   const [errorMessage, setErrorMessage] = useState('');
 
   async function handleSubmit(event) {
@@ -26,9 +39,11 @@ export default function LoginPage() {
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
+
         headers: {
           'Content-Type': 'application/json',
         },
+
         body: JSON.stringify({
           email,
           password,
@@ -39,13 +54,12 @@ export default function LoginPage() {
 
       if (!response.ok) {
         setErrorMessage(data.message || 'Connexion échouée');
+
         return;
       }
 
-      // Store JWT token
       setToken(data.data.token);
 
-      // Fetch authenticated profile
       const profileResponse = await fetch(`${API_URL}/auth/profile`, {
         headers: {
           Authorization: `Bearer ${data.data.token}`,
@@ -60,27 +74,36 @@ export default function LoginPage() {
         return;
       }
 
-      // Save user in AuthProvider
       login(profileData.data.user);
 
-      // Redirect to dashboard
       router.push('/dashboard');
     } catch (error) {
       console.error(error);
+
       setErrorMessage('Erreur serveur');
     }
   }
 
   return (
-    <AuthLayout>
-      <main>
-        <section>
-          <p>Abricot.co</p>
+    <AuthLayout variant="login">
+      <div className="login-page">
+        <div className="login-page__logo">
+          <Image
+            src="/logos/abricot-logo.svg"
+            alt="Abricot"
+            width={147}
+            height={19}
+            priority
+          />
+        </div>
 
-          <h1>Connexion</h1>
+        <div className="login-page__content">
+          <div className="login-page__intro">
+            <h1 className="login-page__title">Connexion</h1>
+          </div>
 
-          <form onSubmit={handleSubmit}>
-            <div>
+          <form className="login-page__form" onSubmit={handleSubmit}>
+            <div className="login-page__field">
               <label htmlFor="email">Email</label>
 
               <input
@@ -93,7 +116,7 @@ export default function LoginPage() {
               />
             </div>
 
-            <div>
+            <div className="login-page__field">
               <label htmlFor="password">Mot de passe</label>
 
               <input
@@ -106,18 +129,24 @@ export default function LoginPage() {
               />
             </div>
 
-            <a href="#">Mot de passe oublié ?</a>
+            <a href="#" className="login-page__forgot">
+              Mot de passe oublié?
+            </a>
 
-            {errorMessage && <p role="alert">{errorMessage}</p>}
+            {errorMessage && (
+              <p role="alert" className="login-page__error">
+                {errorMessage}
+              </p>
+            )}
 
             <Button type="submit">Se connecter</Button>
           </form>
+        </div>
 
-          <p>
-            Pas encore de compte ? <Link href="/register">Créer un compte</Link>
-          </p>
-        </section>
-      </main>
+        <p className="login-page__register">
+          Pas encore de compte ? <Link href="/register">Créer un compte</Link>
+        </p>
+      </div>
     </AuthLayout>
   );
 }

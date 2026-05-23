@@ -16,6 +16,8 @@ import Modal from '@/components/Modal/Modal';
 
 import ProjectForm from '@/components/ProjectForm/ProjectForm';
 
+import './Projects.css';
+
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
 
@@ -147,36 +149,42 @@ export default function ProjectsPage() {
 
   return (
     <DashboardLayout>
-      <main>
-        <section>
-          <h1>Mes projets</h1>
+      <main className="projects-page">
+        <section className="projects-page__hero">
+          <div className="projects-page__intro">
+            <h1 className="projects-page__title">Mes projets</h1>
 
-          <p>Gérez vos projets</p>
+            <p className="projects-page__subtitle">Gérez vos projets</p>
+          </div>
 
           <Button onClick={() => setIsModalOpen(true)}>
             + Créer un projet
           </Button>
+        </section>
 
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <ProjectForm
-              onSubmit={handleCreateProject}
-              submitLabel="Ajouter un projet"
-              title="Créer un projet"
-            />
-          </Modal>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <ProjectForm
+            onSubmit={handleCreateProject}
+            submitLabel="Ajouter un projet"
+            title="Créer un projet"
+          />
+        </Modal>
 
-          {loading && <p>Chargement...</p>}
+        {loading && <p>Chargement...</p>}
 
-          {error && <p>{error}</p>}
+        {error && <p>{error}</p>}
 
-          {!loading && !projects.length && <p>Aucun projet trouvé.</p>}
+        {!loading && !projects.length && (
+          <p className="projects-page__empty">Aucun projet trouvé.</p>
+        )}
 
-          <div>
+        {!!projects.length && (
+          <section className="projects-page__grid">
             {projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
-          </div>
-        </section>
+          </section>
+        )}
       </main>
     </DashboardLayout>
   );

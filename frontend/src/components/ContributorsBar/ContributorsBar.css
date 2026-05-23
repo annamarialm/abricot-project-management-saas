@@ -1,0 +1,171 @@
+.contributors-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  width: 100%;
+
+  padding: 20px 50px;
+
+  background-color: #f3f4f6;
+
+  border-radius: var(--radius-md);
+}
+
+.contributors-bar__intro {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.contributors-bar__title {
+  font-family: var(--font-heading);
+
+  font-size: var(--text-h5);
+
+  font-weight: var(--font-semibold);
+
+  line-height: var(--line-height-tight);
+
+  color: var(--color-text-primary);
+}
+
+.contributors-bar__count {
+  font-size: var(--text-body-md);
+
+  color: var(--color-text-secondary);
+}
+
+.contributors-bar__members {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  flex-wrap: wrap;
+}
+
+.contributors-bar__owner {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.contributors-bar__owner-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 27px;
+  height: 27px;
+
+  border-radius: 50%;
+
+  background-color: #ffe8d9;
+
+  font-size: 10px;
+
+  color: var(--color-text-primary);
+
+  flex-shrink: 0;
+}
+
+.contributors-bar__owner-role {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 25px;
+
+  padding: 4px 16px;
+
+  border-radius: 50px;
+
+  background-color: #ffe8d9;
+
+  font-size: var(--text-body-xs);
+
+  color: var(--color-accent);
+
+  white-space: nowrap;
+}
+
+.contributors-bar__contributors {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+.contributors-bar__member {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.contributors-bar__member-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 27px;
+  height: 27px;
+
+  border-radius: 50%;
+
+  background-color: #e5e7eb;
+
+  border: 1px solid #ffffff;
+
+  font-size: 10px;
+
+  color: var(--color-text-primary);
+
+  flex-shrink: 0;
+}
+
+.contributors-bar__member-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 25px;
+
+  padding: 4px 16px;
+
+  border-radius: 50px;
+
+  background-color: #e5e7eb;
+
+  font-size: var(--text-body-xs);
+
+  color: var(--color-text-secondary);
+
+  white-space: nowrap;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .contributors-bar {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 20px;
+  }
+
+  .contributors-bar__intro {
+    flex-wrap: wrap;
+  }
+
+  .contributors-bar__members {
+    width: 100%;
+  }
+}

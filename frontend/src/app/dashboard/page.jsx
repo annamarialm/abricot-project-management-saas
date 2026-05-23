@@ -2,23 +2,25 @@
 
 import { useEffect, useState } from 'react';
 
+import Image from 'next/image';
+
 import { useRouter } from 'next/navigation';
 
 import API_URL from '@/api/api';
 
 import { getToken } from '@/api/auth';
 
-import DashboardLayout from '@/layout/DashboardLayout/DashboardLayout';
-
 import { useAuth } from '@/components/AuthProvider/AuthProvider';
 
 import Button from '@/components/Button/Button';
+
+import DashboardTaskCard from '@/components/DashboardTaskCard/DashboardTaskCard';
 
 import Modal from '@/components/Modal/Modal';
 
 import ProjectForm from '@/components/ProjectForm/ProjectForm';
 
-import DashboardTaskCard from '@/components/DashboardTaskCard/DashboardTaskCard';
+import DashboardLayout from '@/layout/DashboardLayout/DashboardLayout';
 
 import './Dashboard.css';
 
@@ -165,7 +167,13 @@ export default function DashboardPage() {
                 view === 'list' ? 'dashboard-page__view-button--active' : ''
               }`}
             >
-              <img src="/icons/liste.svg" alt="" aria-hidden="true" />
+              <Image
+                src="/icons/liste.svg"
+                alt=""
+                width={14}
+                height={14}
+                aria-hidden="true"
+              />
 
               <span>Liste</span>
             </button>
@@ -177,11 +185,18 @@ export default function DashboardPage() {
                 view === 'kanban' ? 'dashboard-page__view-button--active' : ''
               }`}
             >
-              <img src="/icons/kanban.svg" alt="" aria-hidden="true" />
+              <Image
+                src="/icons/kanban.svg"
+                alt=""
+                width={14}
+                height={14}
+                aria-hidden="true"
+              />
 
               <span>Kanban</span>
             </button>
           </div>
+
           {error && <p>{error}</p>}
 
           {view === 'list' && (
@@ -192,11 +207,18 @@ export default function DashboardPage() {
 
                   <p className="section-subtitle">Par ordre de priorité</p>
                 </div>
+
                 <div className="dashboard-page__search">
                   <input type="search" placeholder="Rechercher une tâche" />
 
-                  <img src="/icons/search.svg" alt="" aria-hidden="true" />
-                </div>{' '}
+                  <Image
+                    src="/icons/search.svg"
+                    alt=""
+                    width={14}
+                    height={14}
+                    aria-hidden="true"
+                  />
+                </div>
               </div>
 
               {!tasks.length ? (
@@ -213,36 +235,48 @@ export default function DashboardPage() {
 
           {view === 'kanban' && (
             <section className="dashboard-page__kanban">
-              <div className="surface-section">
+              <div className="surface-section surface-section--kanban">
                 <h2 className="section-title">À faire ({todoTasks.length})</h2>
 
-                <div className="dashboard-page__task-list">
+                <div className="dashboard-page__task-list dashboard-page__task-list--kanban">
                   {todoTasks.map((task) => (
-                    <DashboardTaskCard key={task.id} task={task} />
+                    <DashboardTaskCard
+                      key={task.id}
+                      task={task}
+                      variant="kanban"
+                    />
                   ))}
                 </div>
               </div>
 
-              <div className="surface-section">
+              <div className="surface-section surface-section--kanban">
                 <h2 className="section-title">
                   En cours ({inProgressTasks.length})
                 </h2>
 
-                <div className="dashboard-page__task-list">
+                <div className="dashboard-page__task-list dashboard-page__task-list--kanban">
                   {inProgressTasks.map((task) => (
-                    <DashboardTaskCard key={task.id} task={task} />
+                    <DashboardTaskCard
+                      key={task.id}
+                      task={task}
+                      variant="kanban"
+                    />
                   ))}
                 </div>
               </div>
 
-              <div className="surface-section">
+              <div className="surface-section surface-section--kanban">
                 <h2 className="section-title">
                   Terminées ({doneTasks.length})
                 </h2>
 
-                <div className="dashboard-page__task-list">
+                <div className="dashboard-page__task-list dashboard-page__task-list--kanban">
                   {doneTasks.map((task) => (
-                    <DashboardTaskCard key={task.id} task={task} />
+                    <DashboardTaskCard
+                      key={task.id}
+                      task={task}
+                      variant="kanban"
+                    />
                   ))}
                 </div>
               </div>

@@ -2,6 +2,8 @@
 
 import { use, useCallback, useEffect, useState } from 'react';
 
+import Link from 'next/link';
+
 import API_URL from '@/api/api';
 
 import { getToken } from '@/api/auth';
@@ -23,10 +25,12 @@ import AITaskForm from '@/components/AITaskForm/AITaskForm';
 import ContributorsBar from '@/components/ContributorsBar/ContributorsBar';
 
 import TasksHeader from '@/components/TasksHeader/TasksHeader';
-import { useAuth } from '@/components/AuthProvider/AuthProvider';
 
 import EditProjectForm from '@/components/EditProjectForm/EditProjectForm';
-import Link from 'next/link';
+
+import { useAuth } from '@/components/AuthProvider/AuthProvider';
+
+import './Project.css';
 
 export default function ProjectPage({ params }) {
   const resolvedParams = use(params);
@@ -65,13 +69,9 @@ export default function ProjectPage({ params }) {
 
   const canEditProject = isOwner || role === 'ADMIN';
 
-  const canManageContributors = isOwner || role === 'ADMIN';
-
   const canCreateTask = isOwner || role === 'ADMIN' || role === 'CONTRIBUTOR';
 
   const canEditTask = isOwner || role === 'ADMIN' || role === 'CONTRIBUTOR';
-
-  const canDeleteTask = isOwner || role === 'ADMIN' || role === 'CONTRIBUTOR';
 
   const canComment = isOwner || role === 'ADMIN' || role === 'CONTRIBUTOR';
 
@@ -125,7 +125,9 @@ export default function ProjectPage({ params }) {
       }
 
       setContributors(data.data.project.members || []);
+
       setProject(data.data.project);
+
       setOwner(data.data.project.owner);
     } catch (error) {
       console.error(error);
@@ -156,48 +158,81 @@ export default function ProjectPage({ params }) {
 
   return (
     <DashboardLayout>
-      <main>
-        <section>
-          <div>
-            <Link href="/projects">←</Link>
+      <main className="project-page">
+        <section className="project-page__hero">
+          <div className="project-page__hero-content">
+            <div className="project-page__hero-left">
+              <Link
+                href="/projects"
+                className="project-page__back-button"
+                aria-label="Retour aux projets"
+              >
+                ←
+              </Link>
 
-            <h1>{project?.name || 'Projet'}</h1>
+              <div className="project-page__intro">
+                <div className="project-page__title-row">
+                  <h1 className="project-page__title">
+                    {project?.name || 'Projet'}
+                  </h1>
+
+                  {canEditProject && (
+                    <button
+                      type="button"
+                      className="project-page__edit-link"
+                      onClick={() => setIsProjectModalOpen(true)}
+                    >
+                      Modifier
+                    </button>
+                  )}
+                </div>
+
+                <p className="project-page__subtitle">{project?.description}</p>
+              </div>
+            </div>
+
+            {canCreateTask && (
+              <div className="project-page__actions">
+                <Button onClick={() => setIsCreateModalOpen(true)}>
+                  Créer une tâche
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="accent"
+                  size="small"
+                  onClick={() => setIsAIModalOpen(true)}
+                >
+                  ✦ IA
+                </Button>
+              </div>
+            )}
           </div>
 
-          {canEditProject && (
-            <button type="button" onClick={() => setIsProjectModalOpen(true)}>
-              Modifier
-            </button>
-          )}
-
-          {canCreateTask && (
-            <>
-              <Button onClick={() => setIsCreateModalOpen(true)}>
-                + Créer une tâche
-              </Button>
-              <Button
-                type="button"
-                variant="accent"
-                size="small"
-                onClick={() => setIsAIModalOpen(true)}
-              >
-                IA
-              </Button>{' '}
-            </>
-          )}
           {owner && (
             <ContributorsBar contributors={contributors} owner={owner} />
           )}
+        </section>
 
-          {loading && <p>Chargement...</p>}
+        {loading && <p>Chargement...</p>}
 
-          {error && <p>{error}</p>}
+        {error && <p>{error}</p>}
 
-          {!loading && !tasks.length && <p>Aucune tâche trouvée.</p>}
+        {!loading && !tasks.length && <p>Aucune tâche trouvée.</p>}
 
-          <TasksHeader />
+        <section className="surface-section">
+          <div className="section-header">
+            <div className="section-intro">
+              <h2 className="section-title">Tâches</h2>
 
-          <div>
+              <p className="section-subtitle">Par ordre de priorité</p>
+            </div>
+
+            <TasksHeader />
+          </div>
+
+          <div className="project-page__tasks">
+            {' '}
             {tasks.map((task) => (
               <TaskCard
                 key={task.id}
@@ -209,48 +244,48 @@ export default function ProjectPage({ params }) {
               />
             ))}
           </div>
-
-          <Modal
-            isOpen={isCreateModalOpen}
-            onClose={() => setIsCreateModalOpen(false)}
-          >
-            <CreateTaskForm
-              projectId={resolvedParams.id}
-              contributors={contributors}
-              onTaskCreated={fetchTasks}
-              onClose={() => setIsCreateModalOpen(false)}
-            />
-          </Modal>
-
-          <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
-            {selectedTask && (
-              <EditTaskForm
-                task={selectedTask}
-                contributors={contributors}
-                projectId={resolvedParams.id}
-                onTaskUpdated={fetchTasks}
-                onClose={closeEditModal}
-              />
-            )}
-          </Modal>
-
-          <Modal
-            isOpen={isProjectModalOpen}
-            onClose={() => setIsProjectModalOpen(false)}
-          >
-            {project && (
-              <EditProjectForm
-                project={project}
-                onClose={() => setIsProjectModalOpen(false)}
-                onProjectUpdated={fetchContributors}
-              />
-            )}
-          </Modal>
-
-          <Modal isOpen={isAIModalOpen} onClose={() => setIsAIModalOpen(false)}>
-            <AITaskForm onClose={() => setIsAIModalOpen(false)} />
-          </Modal>
         </section>
+
+        <Modal
+          isOpen={isCreateModalOpen}
+          onClose={() => setIsCreateModalOpen(false)}
+        >
+          <CreateTaskForm
+            projectId={resolvedParams.id}
+            contributors={contributors}
+            onTaskCreated={fetchTasks}
+            onClose={() => setIsCreateModalOpen(false)}
+          />
+        </Modal>
+
+        <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
+          {selectedTask && (
+            <EditTaskForm
+              task={selectedTask}
+              contributors={contributors}
+              projectId={resolvedParams.id}
+              onTaskUpdated={fetchTasks}
+              onClose={closeEditModal}
+            />
+          )}
+        </Modal>
+
+        <Modal
+          isOpen={isProjectModalOpen}
+          onClose={() => setIsProjectModalOpen(false)}
+        >
+          {project && (
+            <EditProjectForm
+              project={project}
+              onClose={() => setIsProjectModalOpen(false)}
+              onProjectUpdated={fetchContributors}
+            />
+          )}
+        </Modal>
+
+        <Modal isOpen={isAIModalOpen} onClose={() => setIsAIModalOpen(false)}>
+          <AITaskForm onClose={() => setIsAIModalOpen(false)} />
+        </Modal>
       </main>
     </DashboardLayout>
   );
