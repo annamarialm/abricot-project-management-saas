@@ -96,8 +96,7 @@ export default function ProjectForm({
       </div>
 
       <div className="form-group">
-        <label className="form-label">Contributeurs</label>
-
+        <p className="form-label">Contributeurs</p>
         <UserSearch
           selectedUsers={form.contributors}
           onAddUser={handleAddUser}

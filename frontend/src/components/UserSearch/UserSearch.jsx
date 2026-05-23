@@ -56,6 +56,7 @@ export default function UserSearch({ selectedUsers, onAddUser }) {
         className="form-input"
         type="text"
         placeholder="Choisir un ou plusieurs collaborateurs"
+        aria-label="Rechercher des collaborateurs"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       />

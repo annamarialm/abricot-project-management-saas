@@ -197,7 +197,11 @@ export default function TaskCard({
                 onSubmit={handleAddComment}
                 className="task-card__comment-form"
               >
+                <label htmlFor="comment" className="sr-only">
+                  Ajouter un commentaire
+                </label>
                 <textarea
+                  id="comment"
                   placeholder="Ajouter un commentaire..."
                   value={commentText}
                   onChange={(event) => setCommentText(event.target.value)}

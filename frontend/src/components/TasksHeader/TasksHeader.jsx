@@ -48,8 +48,11 @@ export default function TasksHeader() {
       </button>
 
       <div className="tasks-header__search">
-        <input type="search" placeholder="Rechercher une tâche" />
-
+        <input
+          type="search"
+          placeholder="Rechercher une tâche"
+          aria-label="Rechercher une tâche"
+        />
         <Image
           src="/icons/search.svg"
           alt=""

@@ -8,7 +8,7 @@ export default function DashboardLayout({ children }) {
     <div className="dashboard-layout">
       <Header />
 
-      <main className="dashboard-layout__main">{children}</main>
+      <div className="dashboard-layout__main">{children}</div>
 
       <Footer />
     </div>

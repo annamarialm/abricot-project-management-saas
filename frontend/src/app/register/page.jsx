@@ -45,8 +45,6 @@ export default function RegisterPage() {
 
         return;
       }
-
-      console.log(data);
     } catch (error) {
       setErrorMessage('Erreur serveur');
     }

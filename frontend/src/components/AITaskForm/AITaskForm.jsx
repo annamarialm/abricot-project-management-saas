@@ -4,6 +4,8 @@ import './AITaskForm.css';
 
 import { useState } from 'react';
 
+import Image from 'next/image';
+
 export default function AITaskForm({ onClose }) {
   const [prompt, setPrompt] = useState('');
 
@@ -18,12 +20,14 @@ export default function AITaskForm({ onClose }) {
   return (
     <form className="ai-task-form" onSubmit={handleSubmit}>
       <div className="ai-task-form__header">
-        <img
+        <Image
           src="/icons/Star 1.svg"
           alt=""
+          width={16}
+          height={16}
           className="ai-task-form__title-icon"
+          aria-hidden="true"
         />
-
         <h2>Créer une tâche</h2>
       </div>
 
@@ -45,7 +49,13 @@ export default function AITaskForm({ onClose }) {
           className="ai-task-form__submit-button"
           aria-label="Envoyer la demande IA"
         >
-          <img src="/icons/IA button.svg" alt="" />
+          <Image
+            src="/icons/IA button.svg"
+            alt=""
+            width={24}
+            height={24}
+            aria-hidden="true"
+          />{' '}
         </button>
       </div>
     </form>

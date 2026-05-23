@@ -1,20 +1,25 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+
 import DashboardLayout from '@/layout/DashboardLayout/DashboardLayout';
+
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+
 import API_URL from '@/api/api';
+
 import './Profile.css';
 
 import '@/styles/forms.css';
+
 import { getToken, removeToken } from '@/api/auth';
 
 import { useAuth } from '@/components/AuthProvider/AuthProvider';
-import Button from '@/components/Button/Button';
-export default function ProfilePage() {
-  const router = useRouter();
 
-  const { user, loading, logout } = useAuth();
+import Button from '@/components/Button/Button';
+
+export default function ProfilePage() {
+  const { user, logout } = useAuth();
 
   const [profile, setProfile] = useState(null);
 
@@ -27,13 +32,6 @@ export default function ProfilePage() {
     currentPassword: '',
     newPassword: '',
   });
-
-  // Protect route
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
-    }
-  }, [loading, user, router]);
 
   // Fetch profile
   useEffect(() => {
@@ -182,147 +180,143 @@ export default function ProfilePage() {
     router.push('/login');
   }
 
-  if (loading) {
-    return <p>Chargement...</p>;
-  }
-
-  if (!user) {
-    return null;
-  }
-
   return (
-    <DashboardLayout>
-      <main className="profile-page">
-        <section className="surface-section profile-page__section">
-          <div className="profile-page__intro">
-            <h1 className="profile-page__title">Mon compte</h1>
+    <ProtectedRoute>
+      <DashboardLayout>
+        <main className="profile-page">
+          <section className="surface-section profile-page__section">
+            <div className="profile-page__intro">
+              <h1 className="profile-page__title">Mon compte</h1>
 
-            <p className="profile-page__subtitle">{profile?.name || ''}</p>
-          </div>
+              <p className="profile-page__subtitle">{profile?.name || ''}</p>
+            </div>
 
-          <div className="profile-page__form">
-            <div className="profile-page__fields">
-              <div className="form-group">
-                <label className="form-label" htmlFor="lastName">
-                  Nom
-                </label>
-
-                <input
-                  className="form-input"
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  value={form.lastName || ''}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label" htmlFor="firstName">
-                  Prénom
-                </label>
-
-                <input
-                  className="form-input"
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  value={form.firstName || ''}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label" htmlFor="email">
-                  Email
-                </label>
-
-                <input
-                  className="form-input"
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={form.email || ''}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                />
-              </div>
-
-              {!isEditing ? (
+            <div className="profile-page__form">
+              <div className="profile-page__fields">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="password">
-                    Mot de passe
+                  <label className="form-label" htmlFor="lastName">
+                    Nom
                   </label>
 
                   <input
                     className="form-input"
-                    id="password"
-                    type="password"
-                    value="password"
-                    disabled
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    value={form.lastName || ''}
+                    onChange={handleChange}
+                    disabled={!isEditing}
                   />
                 </div>
+
+                <div className="form-group">
+                  <label className="form-label" htmlFor="firstName">
+                    Prénom
+                  </label>
+
+                  <input
+                    className="form-input"
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    value={form.firstName || ''}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label" htmlFor="email">
+                    Email
+                  </label>
+
+                  <input
+                    className="form-input"
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={form.email || ''}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {!isEditing ? (
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="password">
+                      Mot de passe
+                    </label>
+
+                    <input
+                      className="form-input"
+                      id="password"
+                      type="password"
+                      value="••••••••"
+                      disabled
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <div className="form-group">
+                      <label className="form-label" htmlFor="currentPassword">
+                        Mot de passe actuel
+                      </label>
+
+                      <input
+                        className="form-input"
+                        id="currentPassword"
+                        name="currentPassword"
+                        type="password"
+                        value={form.currentPassword || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label className="form-label" htmlFor="newPassword">
+                        Nouveau mot de passe
+                      </label>
+
+                      <input
+                        className="form-input"
+                        id="newPassword"
+                        name="newPassword"
+                        type="password"
+                        value={form.newPassword || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {!isEditing ? (
+                <div className="profile-page__actions">
+                  <Button onClick={handleEdit}>
+                    Modifier les informations
+                  </Button>
+                </div>
               ) : (
-                <>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="currentPassword">
-                      Mot de passe actuel
-                    </label>
+                <div className="profile-page__actions">
+                  <Button onClick={handleSave}>
+                    Enregistrer les modifications
+                  </Button>
 
-                    <input
-                      className="form-input"
-                      id="currentPassword"
-                      name="currentPassword"
-                      type="password"
-                      value={form.currentPassword || ''}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="newPassword">
-                      Nouveau mot de passe
-                    </label>
-
-                    <input
-                      className="form-input"
-                      id="newPassword"
-                      name="newPassword"
-                      type="password"
-                      value={form.newPassword || ''}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </>
+                  <Button variant="secondary" onClick={handleCancel}>
+                    Annuler
+                  </Button>
+                </div>
               )}
-            </div>
 
-            {!isEditing ? (
-              <div className="profile-page__actions">
-                <Button onClick={handleEdit}>Modifier les informations</Button>
-              </div>
-            ) : (
-              <div className="profile-page__actions">
-                <Button onClick={handleSave}>
-                  Enregistrer les modifications
-                </Button>
-
-                <Button variant="secondary" onClick={handleCancel}>
-                  Annuler
+              <div className="profile-page__logout">
+                <Button variant="outline" onClick={handleLogout}>
+                  Se déconnecter
                 </Button>
               </div>
-            )}
-
-            <div className="profile-page__logout">
-              <Button variant="outline" onClick={handleLogout}>
-                Se déconnecter
-              </Button>
             </div>
-          </div>
-        </section>
-      </main>
-    </DashboardLayout>
+          </section>
+        </main>
+      </DashboardLayout>
+    </ProtectedRoute>
   );
 }

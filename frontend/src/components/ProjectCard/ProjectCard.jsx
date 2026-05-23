@@ -28,7 +28,7 @@ export default function ProjectCard({ project }) {
     <Link href={`/project/${project.id}`} className="project-card">
       <article className="project-card__content">
         <div className="project-card__intro">
-          <h3 className="project-card__title">{project.name}</h3>
+          <h2 className="project-card__title">{project.name}</h2>
 
           <p className="project-card__description">{project.description}</p>
         </div>
@@ -44,6 +44,11 @@ export default function ProjectCard({ project }) {
 
           <div className="project-card__progress-bar">
             <div
+              role="progressbar"
+              aria-valuenow={progress.percentage}
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-label="Progression du projet"
               className="project-card__progress-fill"
               style={{
                 width: `${progress.percentage}%`,

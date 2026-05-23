@@ -129,6 +129,8 @@ export default function LoginPage() {
               />
             </div>
 
+            <Button type="submit">Se connecter</Button>
+
             <a href="#" className="login-page__forgot">
               Mot de passe oublié?
             </a>
@@ -138,8 +140,6 @@ export default function LoginPage() {
                 {errorMessage}
               </p>
             )}
-
-            <Button type="submit">Se connecter</Button>
           </form>
         </div>
 

@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Abricot.co — Frontend
 
-## Getting Started
+[English](#english) | [Français](#français)
 
-First, run the development server:
+---
+
+# English
+
+## About
+
+Abricot.co is a collaborative SaaS project management application built with Next.js and React as part of the OpenClassrooms project:
+
+**“Développez un SaaS de gestion de tâches”**
+
+This frontend includes:
+
+- authentication
+- dashboard views
+- kanban board
+- project management
+- task management
+- comments system
+- permissions system
+
+Backend API:
+:contentReference[oaicite:0]{index=0}
+
+---
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- Plain CSS
+- Context API
+- Fetch API
+
+---
+
+## Features
+
+- User authentication
+- Protected routes
+- Project creation/editing
+- Contributor management
+- Task creation/editing/deletion
+- Task comments
+- Dashboard list view
+- Dashboard kanban view
+- Role/permission system
+
+---
+
+## Installation
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Production build:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Frontend runs on:
 
-## Learn More
+```text
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Français
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## À propos
 
-## Deploy on Vercel
+Abricot.co est une application SaaS collaborative de gestion de projet développée avec Next.js et React dans le cadre du projet OpenClassrooms :
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**« Développez un SaaS de gestion de tâches »**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Le frontend inclut :
+
+- authentification
+- dashboard
+- vue kanban
+- gestion de projets
+- gestion des tâches
+- système de commentaires
+- système de permissions
+
+Backend API :
+:contentReference[oaicite:1]{index=1}
+
+---
+
+## Stack Technique
+
+- Next.js 16
+- React 19
+- CSS classique
+- Context API
+- Fetch API
+
+---
+
+## Fonctionnalités
+
+- Authentification utilisateur
+- Routes protégées
+- Création/modification de projets
+- Gestion des contributeurs
+- Création/modification/suppression de tâches
+- Commentaires sur les tâches
+- Vue liste dashboard
+- Vue kanban dashboard
+- Gestion des permissions
+
+---
+
+## Installation
+
+```bash
+npm install
+npm run dev
+```
+
+Build production :
+
+```bash
+npm run build
+npm start
+```
+
+Le frontend démarre sur :
+
+```text
+http://localhost:3000
+```

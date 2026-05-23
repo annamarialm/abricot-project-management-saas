@@ -28,6 +28,8 @@ import TasksHeader from '@/components/TasksHeader/TasksHeader';
 
 import EditProjectForm from '@/components/EditProjectForm/EditProjectForm';
 
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+
 import { useAuth } from '@/components/AuthProvider/AuthProvider';
 
 import './Project.css';
@@ -157,136 +159,139 @@ export default function ProjectPage({ params }) {
   }
 
   return (
-    <DashboardLayout>
-      <main className="project-page">
-        <section className="project-page__hero">
-          <div className="project-page__hero-content">
-            <div className="project-page__hero-left">
-              <Link
-                href="/projects"
-                className="project-page__back-button"
-                aria-label="Retour aux projets"
-              >
-                ←
-              </Link>
-
-              <div className="project-page__intro">
-                <div className="project-page__title-row">
-                  <h1 className="project-page__title">
-                    {project?.name || 'Projet'}
-                  </h1>
-
-                  {canEditProject && (
-                    <button
-                      type="button"
-                      className="project-page__edit-link"
-                      onClick={() => setIsProjectModalOpen(true)}
-                    >
-                      Modifier
-                    </button>
-                  )}
-                </div>
-
-                <p className="project-page__subtitle">{project?.description}</p>
-              </div>
-            </div>
-
-            {canCreateTask && (
-              <div className="project-page__actions">
-                <Button onClick={() => setIsCreateModalOpen(true)}>
-                  Créer une tâche
-                </Button>
-
-                <Button
-                  type="button"
-                  variant="accent"
-                  size="small"
-                  onClick={() => setIsAIModalOpen(true)}
+    <ProtectedRoute>
+      <DashboardLayout>
+        <main className="project-page">
+          <section className="project-page__hero">
+            <div className="project-page__hero-content">
+              <div className="project-page__hero-left">
+                <Link
+                  href="/projects"
+                  className="project-page__back-button"
+                  aria-label="Retour aux projets"
                 >
-                  ✦ IA
-                </Button>
+                  ←
+                </Link>
+
+                <div className="project-page__intro">
+                  <div className="project-page__title-row">
+                    <h1 className="project-page__title">
+                      {project?.name || 'Projet'}
+                    </h1>
+
+                    {canEditProject && (
+                      <button
+                        type="button"
+                        className="project-page__edit-link"
+                        onClick={() => setIsProjectModalOpen(true)}
+                      >
+                        Modifier
+                      </button>
+                    )}
+                  </div>
+
+                  <p className="project-page__subtitle">
+                    {project?.description}
+                  </p>
+                </div>
               </div>
-            )}
-          </div>
 
-          {owner && (
-            <ContributorsBar contributors={contributors} owner={owner} />
-          )}
-        </section>
+              {canCreateTask && (
+                <div className="project-page__actions">
+                  <Button onClick={() => setIsCreateModalOpen(true)}>
+                    Créer une tâche
+                  </Button>
 
-        {loading && <p>Chargement...</p>}
-
-        {error && <p>{error}</p>}
-
-        {!loading && !tasks.length && <p>Aucune tâche trouvée.</p>}
-
-        <section className="surface-section">
-          <div className="section-header">
-            <div className="section-intro">
-              <h2 className="section-title">Tâches</h2>
-
-              <p className="section-subtitle">Par ordre de priorité</p>
+                  <Button
+                    type="button"
+                    variant="accent"
+                    size="small"
+                    onClick={() => setIsAIModalOpen(true)}
+                  >
+                    ✦ IA
+                  </Button>
+                </div>
+              )}
             </div>
 
-            <TasksHeader />
-          </div>
+            {owner && (
+              <ContributorsBar contributors={contributors} owner={owner} />
+            )}
+          </section>
 
-          <div className="project-page__tasks">
-            {' '}
-            {tasks.map((task) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                projectId={resolvedParams.id}
-                onEdit={handleEditTask}
-                canEditTask={canEditTask}
-                canComment={canComment}
-              />
-            ))}
-          </div>
-        </section>
+          {loading && <p>Chargement...</p>}
 
-        <Modal
-          isOpen={isCreateModalOpen}
-          onClose={() => setIsCreateModalOpen(false)}
-        >
-          <CreateTaskForm
-            projectId={resolvedParams.id}
-            contributors={contributors}
-            onTaskCreated={fetchTasks}
+          {error && <p role="alert">{error}</p>}
+
+          {!loading && !tasks.length && <p>Aucune tâche trouvée.</p>}
+
+          <section className="surface-section">
+            <div className="section-header">
+              <div className="section-intro">
+                <h2 className="section-title">Tâches</h2>
+
+                <p className="section-subtitle">Par ordre de priorité</p>
+              </div>
+
+              <TasksHeader />
+            </div>
+
+            <div className="project-page__tasks">
+              {tasks.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  projectId={resolvedParams.id}
+                  onEdit={handleEditTask}
+                  canEditTask={canEditTask}
+                  canComment={canComment}
+                />
+              ))}
+            </div>
+          </section>
+
+          <Modal
+            isOpen={isCreateModalOpen}
             onClose={() => setIsCreateModalOpen(false)}
-          />
-        </Modal>
-
-        <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
-          {selectedTask && (
-            <EditTaskForm
-              task={selectedTask}
-              contributors={contributors}
+          >
+            <CreateTaskForm
               projectId={resolvedParams.id}
-              onTaskUpdated={fetchTasks}
-              onClose={closeEditModal}
+              contributors={contributors}
+              onTaskCreated={fetchTasks}
+              onClose={() => setIsCreateModalOpen(false)}
             />
-          )}
-        </Modal>
+          </Modal>
 
-        <Modal
-          isOpen={isProjectModalOpen}
-          onClose={() => setIsProjectModalOpen(false)}
-        >
-          {project && (
-            <EditProjectForm
-              project={project}
-              onClose={() => setIsProjectModalOpen(false)}
-              onProjectUpdated={fetchContributors}
-            />
-          )}
-        </Modal>
+          <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
+            {selectedTask && (
+              <EditTaskForm
+                task={selectedTask}
+                contributors={contributors}
+                projectId={resolvedParams.id}
+                onTaskUpdated={fetchTasks}
+                onClose={closeEditModal}
+              />
+            )}
+          </Modal>
 
-        <Modal isOpen={isAIModalOpen} onClose={() => setIsAIModalOpen(false)}>
-          <AITaskForm onClose={() => setIsAIModalOpen(false)} />
-        </Modal>
-      </main>
-    </DashboardLayout>
+          <Modal
+            isOpen={isProjectModalOpen}
+            onClose={() => setIsProjectModalOpen(false)}
+          >
+            {project && (
+              <EditProjectForm
+                project={project}
+                onClose={() => setIsProjectModalOpen(false)}
+                onProjectUpdated={fetchContributors}
+              />
+            )}
+          </Modal>
+
+          <Modal isOpen={isAIModalOpen} onClose={() => setIsAIModalOpen(false)}>
+            <AITaskForm onClose={() => setIsAIModalOpen(false)} />
+          </Modal>
+        </main>
+      </DashboardLayout>
+    </ProtectedRoute>
   );
 }

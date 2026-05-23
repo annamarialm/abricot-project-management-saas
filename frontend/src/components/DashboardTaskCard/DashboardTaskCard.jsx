@@ -63,8 +63,9 @@ export default function DashboardTaskCard({ task, variant = 'default' }) {
                 height={14}
                 aria-hidden="true"
               />
-
-              <span>{task.comments.length}</span>
+              <span aria-label={`${task.comments.length} commentaires`}>
+                {task.comments.length}
+              </span>{' '}
             </div>
           </div>
         </div>
