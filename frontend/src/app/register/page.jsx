@@ -12,6 +12,8 @@ import AuthLayout from '@/layout/AuthLayout/AuthLayout';
 
 import Button from '@/components/Button/Button';
 
+import InputField from '@/components/InputField/InputField';
+
 import './Register.css';
 
 export default function RegisterPage() {
@@ -69,29 +71,25 @@ export default function RegisterPage() {
           </div>
 
           <form className="register-page__form" onSubmit={handleSubmit}>
-            <div className="register-page__field">
-              <label htmlFor="email">Email</label>
+            <InputField
+              label="Email"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+              autoComplete="email"
+            />
 
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
-              />
-            </div>
-
-            <div className="register-page__field">
-              <label htmlFor="password">Mot de passe</label>
-
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
-              />
-            </div>
+            <InputField
+              label="Mot de passe"
+              id="password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+              autoComplete="new-password"
+            />
 
             {errorMessage && (
               <p role="alert" className="register-page__error">

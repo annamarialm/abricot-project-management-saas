@@ -18,6 +18,8 @@ import { useAuth } from '@/components/AuthProvider/AuthProvider';
 
 import Button from '@/components/Button/Button';
 
+import InputField from '@/components/InputField/InputField';
+
 import './Login.css';
 
 export default function LoginPage() {
@@ -103,31 +105,25 @@ export default function LoginPage() {
           </div>
 
           <form className="login-page__form" onSubmit={handleSubmit}>
-            <div className="login-page__field">
-              <label htmlFor="email">Email</label>
+            <InputField
+              label="Email"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+              autoComplete="email"
+            />
 
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
-                autoComplete="email"
-              />
-            </div>
-
-            <div className="login-page__field">
-              <label htmlFor="password">Mot de passe</label>
-
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
-                autoComplete="current-password"
-              />
-            </div>
+            <InputField
+              label="Mot de passe"
+              id="password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+              autoComplete="current-password"
+            />
 
             <Button type="submit">Se connecter</Button>
 

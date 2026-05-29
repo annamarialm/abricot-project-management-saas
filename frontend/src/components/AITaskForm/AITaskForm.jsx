@@ -28,12 +28,17 @@ export default function AITaskForm({ onClose }) {
           className="ai-task-form__title-icon"
           aria-hidden="true"
         />
+
         <h2>Créer une tâche</h2>
       </div>
 
       <div className="ai-task-form__content" />
 
       <div className="ai-task-form__prompt-wrapper">
+        <label htmlFor="prompt" className="sr-only">
+          Description de la tâche
+        </label>
+
         <textarea
           id="prompt"
           name="prompt"
@@ -55,7 +60,7 @@ export default function AITaskForm({ onClose }) {
             width={24}
             height={24}
             aria-hidden="true"
-          />{' '}
+          />
         </button>
       </div>
     </form>

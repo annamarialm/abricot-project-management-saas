@@ -12,6 +12,8 @@ import { useAuth } from '@/components/AuthProvider/AuthProvider';
 
 import Button from '@/components/Button/Button';
 
+import DashboardViewButton from '@/components/DashboardViewButton/DashboardViewButton';
+
 import DashboardTaskCard from '@/components/DashboardTaskCard/DashboardTaskCard';
 
 import Modal from '@/components/Modal/Modal';
@@ -23,6 +25,8 @@ import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import DashboardLayout from '@/layout/DashboardLayout/DashboardLayout';
 
 import './Dashboard.css';
+
+import KanbanColumn from '@/components/KanbanColumn/KanbanColumn';
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -134,7 +138,7 @@ export default function DashboardPage() {
 
               <p className="dashboard-page__subtitle">
                 Bonjour {user?.name || user?.email}, voici un aperçu de vos
-                projets et tâches projets et tâches
+                projets et tâches
               </p>
             </div>
 
@@ -145,41 +149,19 @@ export default function DashboardPage() {
 
           <section className="dashboard-page__content">
             <div className="dashboard-page__view-switcher">
-              <button
-                type="button"
+              <DashboardViewButton
+                label="Liste"
+                iconSrc="/icons/liste.svg"
+                isActive={view === 'list'}
                 onClick={() => setView('list')}
-                className={`dashboard-page__view-button ${
-                  view === 'list' ? 'dashboard-page__view-button--active' : ''
-                }`}
-              >
-                <Image
-                  src="/icons/liste.svg"
-                  alt=""
-                  width={14}
-                  height={14}
-                  aria-hidden="true"
-                />
+              />
 
-                <span>Liste</span>
-              </button>
-
-              <button
-                type="button"
+              <DashboardViewButton
+                label="Kanban"
+                iconSrc="/icons/kanban.svg"
+                isActive={view === 'kanban'}
                 onClick={() => setView('kanban')}
-                className={`dashboard-page__view-button ${
-                  view === 'kanban' ? 'dashboard-page__view-button--active' : ''
-                }`}
-              >
-                <Image
-                  src="/icons/kanban.svg"
-                  alt=""
-                  width={14}
-                  height={14}
-                  aria-hidden="true"
-                />
-
-                <span>Kanban</span>
-              </button>
+              />
             </div>
 
             {error && <p>{error}</p>}
@@ -224,53 +206,11 @@ export default function DashboardPage() {
 
             {view === 'kanban' && (
               <section className="dashboard-page__kanban">
-                <div className="surface-section surface-section--kanban">
-                  <h2 className="section-title">
-                    À faire ({todoTasks.length})
-                  </h2>
+                <KanbanColumn title="À faire" tasks={todoTasks} />
 
-                  <div className="dashboard-page__task-list dashboard-page__task-list--kanban">
-                    {todoTasks.map((task) => (
-                      <DashboardTaskCard
-                        key={task.id}
-                        task={task}
-                        variant="kanban"
-                      />
-                    ))}
-                  </div>
-                </div>
+                <KanbanColumn title="En cours" tasks={inProgressTasks} />
 
-                <div className="surface-section surface-section--kanban">
-                  <h2 className="section-title">
-                    En cours ({inProgressTasks.length})
-                  </h2>
-
-                  <div className="dashboard-page__task-list dashboard-page__task-list--kanban">
-                    {inProgressTasks.map((task) => (
-                      <DashboardTaskCard
-                        key={task.id}
-                        task={task}
-                        variant="kanban"
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="surface-section surface-section--kanban">
-                  <h2 className="section-title">
-                    Terminées ({doneTasks.length})
-                  </h2>
-
-                  <div className="dashboard-page__task-list dashboard-page__task-list--kanban">
-                    {doneTasks.map((task) => (
-                      <DashboardTaskCard
-                        key={task.id}
-                        task={task}
-                        variant="kanban"
-                      />
-                    ))}
-                  </div>
-                </div>
+                <KanbanColumn title="Terminées" tasks={doneTasks} />
               </section>
             )}
           </section>

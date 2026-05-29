@@ -10,16 +10,16 @@
 
 Abricot.co is a collaborative SaaS project management application developed with Next.js and React as part of the OpenClassrooms project:
 
-**“Développez un SaaS de gestion de tâches”**
+**"Développez un SaaS de gestion de tâches"**
 
 The application allows users to:
 
-- manage projects
-- manage contributors
-- create and assign tasks
-- track task status
-- collaborate through comments
-- visualize tasks with list and kanban views
+- Manage projects
+- Manage contributors
+- Create and assign tasks
+- Track task status
+- Collaborate through comments
+- Visualize tasks using list and Kanban views
 
 ---
 
@@ -27,11 +27,11 @@ The application allows users to:
 
 ### Frontend
 
-:contentReference[oaicite:0]{index=0}
+The frontend application is developed with Next.js and React.
 
 ### Backend
 
-Provided separately by OpenClassrooms.
+The backend API is provided separately by OpenClassrooms as part of the project specifications.
 
 ---
 
@@ -41,6 +41,7 @@ Provided separately by OpenClassrooms.
 
 - Next.js 16
 - React 19
+- JavaScript (ES6+)
 - Plain CSS
 - Context API
 - Fetch API
@@ -57,16 +58,66 @@ Provided separately by OpenClassrooms.
 
 ## Main Features
 
-- Authentication system
+### Authentication
+
+- User registration
+- User login
+- Secure JWT authentication
 - Protected routes
-- Dashboard views
-- Kanban board
-- Project management
-- Contributor management
-- Task management
+- Profile management
+- Password update
+
+### Project Management
+
+- Create projects
+- Edit project information
+- Manage contributors
+- Track project progress
+
+### Task Management
+
+- Create tasks
+- Edit tasks
+- Delete tasks
+- Assign contributors
+- Manage task statuses
+- Manage deadlines
+
+### Collaboration
+
 - Task comments
-- Permission system
-- Responsive layout (in progress)
+- Contributor management
+- Role and permission system
+
+### Dashboard
+
+- List view
+- Kanban view
+- Project overview
+- Task overview
+
+---
+
+## Accessibility
+
+The application follows accessibility best practices:
+
+- Keyboard navigation support
+- Accessible forms and labels
+- Accessible modal dialogs
+- ARIA attributes where appropriate
+- WAVE validation with no reported errors
+- WCAG AA compliant practices
+
+---
+
+## Responsive Design
+
+The application is fully responsive and supports:
+
+- Mobile devices
+- Tablets
+- Desktop screens
 
 ---
 
@@ -74,12 +125,14 @@ Provided separately by OpenClassrooms.
 
 ### Frontend
 
+Install dependencies:
+
 ```bash
 npm install
 npm run dev
 ```
 
-Production:
+Production build:
 
 ```bash
 npm run build
@@ -94,6 +147,8 @@ http://localhost:3000
 
 ### Backend
 
+Install dependencies:
+
 ```bash
 npm install
 npm run dev
@@ -107,6 +162,21 @@ http://localhost:8000
 
 ---
 
+## Project Structure
+
+```text
+frontend/
+backend/
+```
+
+---
+
+## Notes
+
+The backend API is provided by OpenClassrooms and integrated with the frontend application developed for this project.
+
+---
+
 # Français
 
 ## À propos
@@ -117,24 +187,24 @@ Abricot.co est une application SaaS collaborative de gestion de projet développ
 
 L’application permet :
 
-- la gestion de projets
-- la gestion des contributeurs
-- la création et l’assignation de tâches
-- le suivi des statuts
-- la collaboration via commentaires
-- les vues liste et kanban
+- La gestion de projets
+- La gestion des contributeurs
+- La création et l’assignation de tâches
+- Le suivi des statuts
+- La collaboration via commentaires
+- Les vues liste et Kanban
 
 ---
 
-## Repositories
+## Dépôts
 
 ### Frontend
 
-:contentReference[oaicite:1]{index=1}
+L’application frontend est développée avec Next.js et React.
 
 ### Backend
 
-Fourni séparément par OpenClassrooms.
+L’API backend est fournie séparément par OpenClassrooms dans le cadre du projet.
 
 ---
 
@@ -144,6 +214,7 @@ Fourni séparément par OpenClassrooms.
 
 - Next.js 16
 - React 19
+- JavaScript (ES6+)
 - CSS classique
 - Context API
 - Fetch API
@@ -160,16 +231,66 @@ Fourni séparément par OpenClassrooms.
 
 ## Fonctionnalités principales
 
-- Authentification
+### Authentification
+
+- Inscription utilisateur
+- Connexion utilisateur
+- Authentification sécurisée avec JWT
 - Routes protégées
-- Dashboard
-- Vue kanban
-- Gestion de projets
+- Gestion du profil
+- Modification du mot de passe
+
+### Gestion des projets
+
+- Création de projets
+- Modification des informations du projet
 - Gestion des contributeurs
-- Gestion des tâches
+- Suivi de l’avancement des projets
+
+### Gestion des tâches
+
+- Création de tâches
+- Modification de tâches
+- Suppression de tâches
+- Attribution des contributeurs
+- Gestion des statuts
+- Gestion des échéances
+
+### Collaboration
+
 - Commentaires sur les tâches
-- Gestion des permissions
-- Responsive design (en cours)
+- Gestion des contributeurs
+- Système de rôles et permissions
+
+### Dashboard
+
+- Vue liste
+- Vue Kanban
+- Vue d’ensemble des projets
+- Vue d’ensemble des tâches
+
+---
+
+## Accessibilité
+
+L’application respecte les bonnes pratiques d’accessibilité :
+
+- Navigation clavier
+- Formulaires accessibles
+- Fenêtres modales accessibles
+- Utilisation des attributs ARIA lorsque nécessaire
+- Validation WAVE sans erreur signalée
+- Respect des bonnes pratiques WCAG niveau AA
+
+---
+
+## Responsive Design
+
+L’application est entièrement responsive et s’adapte aux :
+
+- Smartphones
+- Tablettes
+- Ordinateurs de bureau
 
 ---
 
@@ -177,12 +298,14 @@ Fourni séparément par OpenClassrooms.
 
 ### Frontend
 
+Installer les dépendances :
+
 ```bash
 npm install
 npm run dev
 ```
 
-Production :
+Build de production :
 
 ```bash
 npm run build
@@ -197,6 +320,8 @@ http://localhost:3000
 
 ### Backend
 
+Installer les dépendances :
+
 ```bash
 npm install
 npm run dev
@@ -207,3 +332,18 @@ Le backend démarre sur :
 ```text
 http://localhost:8000
 ```
+
+---
+
+## Structure du projet
+
+```text
+frontend/
+backend/
+```
+
+---
+
+## Notes
+
+L’API backend est fournie par OpenClassrooms et intégrée à l’application frontend développée pour ce projet.

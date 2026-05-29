@@ -18,8 +18,12 @@ import { useAuth } from '@/components/AuthProvider/AuthProvider';
 
 import Button from '@/components/Button/Button';
 
+import { useRouter } from 'next/navigation';
+
 export default function ProfilePage() {
   const { user, logout } = useAuth();
+
+  const router = useRouter();
 
   const [profile, setProfile] = useState(null);
 

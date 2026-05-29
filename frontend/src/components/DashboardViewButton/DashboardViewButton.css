@@ -1,0 +1,30 @@
+.dashboard-view-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  height: 45px;
+  padding: 14px 16px;
+
+  background-color: var(--color-surface);
+  border: none;
+  border-radius: 8px;
+
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-regular);
+  color: var(--color-accent);
+
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.dashboard-view-button--active {
+  background-color: #ffe8d9;
+}
+
+.dashboard-view-button img {
+  flex-shrink: 0;
+}

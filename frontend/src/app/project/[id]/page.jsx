@@ -137,6 +137,12 @@ export default function ProjectPage({ params }) {
   }, [resolvedParams.id]);
 
   useEffect(() => {
+    const token = getToken();
+
+    if (!token) {
+      return;
+    }
+
     async function loadProjectData() {
       await fetchTasks();
 
@@ -145,7 +151,6 @@ export default function ProjectPage({ params }) {
 
     loadProjectData();
   }, [fetchTasks, fetchContributors]);
-
   function handleEditTask(task) {
     setSelectedTask(task);
 
